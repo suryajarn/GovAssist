@@ -7,12 +7,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.govassist.app.screens.AboutScreen
 import com.govassist.app.screens.AccountScreen
+import com.govassist.app.screens.ApplicationGuideScreen
 import com.govassist.app.screens.ApplicationsScreen
 import com.govassist.app.screens.ContinueScreen
+import com.govassist.app.screens.EligibilityScreen
 import com.govassist.app.screens.HelpScreen
 import com.govassist.app.screens.HomeScreen
 import com.govassist.app.screens.MenuScreen
 import com.govassist.app.screens.ServicesScreen
+import com.govassist.app.screens.SettingsScreen
 import com.govassist.app.screens.TextModeScreen
 
 /** Central place listing every screen/route in the app. */
@@ -22,9 +25,12 @@ object Routes {
     const val ACCOUNT = "account"
     const val TEXT_MODE = "text_mode"
     const val CONTINUE = "continue"
+    const val ELIGIBILITY = "eligibility"
+    const val APPLICATION_GUIDE = "application_guide"
     const val SERVICES = "services"
     const val APPLICATIONS = "applications"
     const val HELP = "help"
+    const val SETTINGS = "settings"
     const val ABOUT = "about"
 }
 
@@ -37,7 +43,8 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
                 onMenuClick = { navController.navigate(Routes.MENU) },
                 onAccountClick = { navController.navigate(Routes.ACCOUNT) },
                 onContinueClick = { navController.navigate(Routes.CONTINUE) },
-                onTextModeClick = { navController.navigate(Routes.TEXT_MODE) }
+                onTextModeClick = { navController.navigate(Routes.TEXT_MODE) },
+                onEligibilityClick = { navController.navigate(Routes.ELIGIBILITY) }
             )
         }
 
@@ -49,9 +56,12 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
                         popUpTo(Routes.HOME) { inclusive = true }
                     }
                 },
+                onEligibilityClick = { navController.navigate(Routes.ELIGIBILITY) },
+                onApplicationGuideClick = { navController.navigate(Routes.APPLICATION_GUIDE) },
                 onServicesClick = { navController.navigate(Routes.SERVICES) },
                 onApplicationsClick = { navController.navigate(Routes.APPLICATIONS) },
                 onHelpClick = { navController.navigate(Routes.HELP) },
+                onSettingsClick = { navController.navigate(Routes.SETTINGS) },
                 onAboutClick = { navController.navigate(Routes.ABOUT) }
             )
         }
@@ -68,6 +78,17 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
             ContinueScreen(onBack = { navController.popBackStack() })
         }
 
+        composable(Routes.ELIGIBILITY) {
+            EligibilityScreen(
+                onBack = { navController.popBackStack() },
+                onContinueToApplicationGuide = { navController.navigate(Routes.APPLICATION_GUIDE) }
+            )
+        }
+
+        composable(Routes.APPLICATION_GUIDE) {
+            ApplicationGuideScreen(onBack = { navController.popBackStack() })
+        }
+
         composable(Routes.SERVICES) {
             ServicesScreen(onBack = { navController.popBackStack() })
         }
@@ -78,6 +99,10 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
 
         composable(Routes.HELP) {
             HelpScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.SETTINGS) {
+            SettingsScreen(onBack = { navController.popBackStack() })
         }
 
         composable(Routes.ABOUT) {

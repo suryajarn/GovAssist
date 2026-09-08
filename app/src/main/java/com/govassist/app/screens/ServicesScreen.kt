@@ -12,9 +12,11 @@ import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.LocalHospital
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.Savings
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.govassist.app.components.ScreenHeader
 import com.govassist.app.components.ServiceCard
 import com.govassist.app.ui.theme.SurfaceWhite
+import com.govassist.app.ui.theme.TextSecondary
 import kotlinx.coroutines.launch
 
 private data class ServiceEntry(
@@ -78,7 +81,15 @@ fun ServicesScreen(onBack: () -> Unit) {
             contentPadding = PaddingValues(bottom = 24.dp)
         ) {
             item {
-                ScreenHeader(title = "Government Services", onBack = onBack)
+                ScreenHeader(title = "Other Government Services", onBack = onBack)
+                Text(
+                    text = "The Commonwealth Seniors Health Care Card has its own guided " +
+                        "flow — see \"Check CSHC Eligibility\" in the menu. The categories " +
+                        "below are other prototype placeholders.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextSecondary,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
             }
             items(serviceEntries) { entry ->
                 ServiceCard(

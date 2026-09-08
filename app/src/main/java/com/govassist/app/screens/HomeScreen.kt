@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FactCheck
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Keyboard
@@ -33,10 +36,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.govassist.app.components.GovAssistButton
 import com.govassist.app.components.GovAssistOutlinedButton
-import com.govassist.app.ui.theme.AccentTeal
+import com.govassist.app.ui.theme.AccentOrange
 import com.govassist.app.ui.theme.NavyPrimary
 import com.govassist.app.ui.theme.SurfaceWhite
 import com.govassist.app.ui.theme.TextSecondary
@@ -47,7 +51,8 @@ fun HomeScreen(
     onMenuClick: () -> Unit,
     onAccountClick: () -> Unit,
     onContinueClick: () -> Unit,
-    onTextModeClick: () -> Unit
+    onTextModeClick: () -> Unit,
+    onEligibilityClick: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -66,10 +71,21 @@ fun HomeScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = "Your assistant for the Commonwealth Seniors Health Care Card (CSHC)",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = TextSecondary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(bottom = 20.dp)
+                )
+
                 MicrophoneButton(
                     onTap = {
                         coroutineScope.launch {
@@ -79,6 +95,15 @@ fun HomeScreen(
                 )
 
                 Spacer(modifier = Modifier.height(40.dp))
+
+                GovAssistButton(
+                    text = "Check my CSHC eligibility",
+                    onClick = onEligibilityClick,
+                    icon = Icons.Filled.FactCheck,
+                    contentDescription = "Check my CSHC eligibility. Answer a few questions to see if you likely qualify."
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
 
                 GovAssistButton(
                     text = "Continue where you left off",
@@ -166,7 +191,7 @@ private fun MicrophoneButton(onTap: () -> Unit) {
         Surface(
             onClick = onTap,
             shape = CircleShape,
-            color = AccentTeal,
+            color = AccentOrange,
             shadowElevation = 6.dp,
             modifier = Modifier
                 .size(160.dp)

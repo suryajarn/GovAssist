@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -34,9 +35,11 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.govassist.app.ui.theme.AccentOrange
 import com.govassist.app.ui.theme.BorderGrey
 import com.govassist.app.ui.theme.NavyPrimary
 import com.govassist.app.ui.theme.SurfaceLightGrey
+import com.govassist.app.ui.theme.SurfaceWhite
 import com.govassist.app.ui.theme.TextSecondary
 
 /**
@@ -89,10 +92,12 @@ fun GovAssistButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
-    contentDescription: String? = null
+    contentDescription: String? = null,
+    enabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
+        enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 56.dp)
@@ -241,6 +246,51 @@ fun ServiceCard(
                     color = TextSecondary
                 )
             }
+        }
+    }
+}
+
+/**
+ * A large tappable card representing one choice in a single-select question
+ * (e.g. household type, or an Australian state). Highlights when selected.
+ */
+@Composable
+fun SelectableOptionCard(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    Card(
+        onClick = onClick,
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (selected) AccentOrange else SurfaceLightGrey
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .semantics {
+                contentDescription = if (selected) "$label, selected" else label
+            }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 18.dp, vertical = 18.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (selected) {
+                Icon(
+                    imageVector = Icons.Filled.CheckCircle,
+                    contentDescription = null,
+                    tint = SurfaceWhite,
+                    modifier = Modifier.padding(end = 12.dp)
+                )
+            }
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleLarge,
+                color = if (selected) SurfaceWhite else MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }

@@ -7,8 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.govassist.app.navigation.AppNavigation
+import com.govassist.app.settings.LocalAppSettings
+import com.govassist.app.settings.rememberAppSettings
 import com.govassist.app.ui.theme.GovAssistTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,9 +26,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GovAssistApp() {
-    GovAssistTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            AppNavigation()
+    val appSettings = rememberAppSettings()
+
+    CompositionLocalProvider(LocalAppSettings provides appSettings) {
+        GovAssistTheme(
+            highContrast = appSettings.highContrast,
+            largeText = appSettings.largeText
+        ) {
+            Surface(modifier = Modifier.fillMaxSize()) {
+                AppNavigation()
+            }
         }
     }
 }

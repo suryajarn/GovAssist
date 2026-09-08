@@ -10,8 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Accessibility
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.filled.EditNote
+import androidx.compose.material.icons.filled.FactCheck
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,16 +34,22 @@ private data class MenuEntry(
 fun MenuScreen(
     onBack: () -> Unit,
     onHomeClick: () -> Unit,
+    onEligibilityClick: () -> Unit,
+    onApplicationGuideClick: () -> Unit,
     onServicesClick: () -> Unit,
     onApplicationsClick: () -> Unit,
     onHelpClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     onAboutClick: () -> Unit
 ) {
     val menuEntries = listOf(
         MenuEntry("Home", Icons.Filled.Home, onHomeClick),
-        MenuEntry("Government Services", Icons.Filled.AccountBalance, onServicesClick),
+        MenuEntry("Check CSHC Eligibility", Icons.Filled.FactCheck, onEligibilityClick),
+        MenuEntry("CSHC Application Guide", Icons.Filled.EditNote, onApplicationGuideClick),
+        MenuEntry("Other Government Services", Icons.Filled.AccountBalance, onServicesClick),
         MenuEntry("My Applications", Icons.Filled.Assignment, onApplicationsClick),
         MenuEntry("Help & Accessibility", Icons.Filled.Accessibility, onHelpClick),
+        MenuEntry("Settings", Icons.Filled.Settings, onSettingsClick),
         MenuEntry("About GovAssist", Icons.Filled.Info, onAboutClick)
     )
 
